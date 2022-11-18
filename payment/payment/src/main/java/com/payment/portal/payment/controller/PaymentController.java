@@ -12,48 +12,58 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.payment.portal.payment.model.Beneficiary;
+import com.payment.portal.payment.model.Owner;
 import com.payment.portal.payment.repository.BeneficiaryRepository;
+import com.payment.portal.payment.repository.OwnerRepository;
 
 
-@Controller
-@RequestMapping("/")
+@RestController
+@RequestMapping("/pay")
 public class PaymentController {
 	
 	@Autowired
 	BeneficiaryRepository beneficiaryRepository;
 	
+	@Autowired
+	OwnerRepository ownerRepository;
 	
-	
-	@PostMapping
+	@PostMapping("/create")
 	public Beneficiary createBeneficiary(@RequestBody Beneficiary beneficiary) {
 		return beneficiaryRepository.save(beneficiary);
 	}
 	
-	/*@PutMapping
-	public Beneficiary updateBeneficiary(@RequestBody Beneficiary beneficiary) {
-		return beneficiaryRepository.save(beneficiary);
-	}*/
-	
-	@DeleteMapping
-	public void deleteBeneficiary(@RequestBody Beneficiary beneficiary) {
-		 beneficiaryRepository.delete(beneficiary);
+	@DeleteMapping("/delete/{id}")
+	public void deleteBeneficiary(@PathVariable Integer id) {
+		 beneficiaryRepository.deleteById(id);
 	}
 	
-	@GetMapping
-	public Optional<Beneficiary> getBeneficiary(@PathVariable int id) {
-		 return beneficiaryRepository.findById(id);
+	@GetMapping("/get/{id}")
+	public Optional<Beneficiary> getBeneficiary(@PathVariable long id) {
+		 return beneficiaryRepository.findById((int)id);
 	}
 	
-	@GetMapping
+	@GetMapping("/getAll")
 	public List<Beneficiary> getAllBeneficiary() {
 		 return beneficiaryRepository.findAll();
 	}
 	
-	@GetMapping
-	public long getBalance() {
-		 beneficiaryRepository.findAll().get(0).getB
+	@GetMapping("/getOwner")
+	public Owner getBalance() {
+		 return ownerRepository.findAll().get(0);
 	}
+	
+	@PutMapping("/update")
+	public void updateBeneficiary(@RequestBody Beneficiary beneficiary) {
+		beneficiaryRepository.save(beneficiary);
+	}
+	
+	@PutMapping("/updateOwner")
+	public void updateOwner(@RequestBody Owner owner) {
+		ownerRepository.save(owner);
+	}
+	
 
 }

@@ -16,16 +16,20 @@ public class Owner {
 	private int ownerid;
 	
 	@Column(name="balance")
-	private long balance;
+	private Long balance;
+	
+	@Column(name="pin")
+	private Long pin;
 
 	public Owner() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Owner(int ownerid, long balance) {
+	public Owner(int ownerid,Long balance,Long pin) {
 		super();
 		this.ownerid = ownerid;
 		this.balance = balance;
+		this.pin = pin;
 	}
 
 
@@ -38,12 +42,20 @@ public class Owner {
 		this.ownerid = ownerid;
 	}
 
-	public long getBalance() {
+	public Long getBalance() {
 		return balance;
 	}
 
-	public void setBalance(long balance) {
+	public void setBalance(Long balance) {
 		this.balance = balance;
 	}
 
+	public Long getPin() {
+		return pin;
+	}
+
+	public void setPin(Long pin) {
+		this.pin = pin;
+	}
+	
 }
